@@ -22,3 +22,8 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
  * The cleaner shorthand for printing output.
  */
 fun Any?.println() = println(this)
+
+fun String.splitHalf(): Pair<String, String> {
+    val mid = length / 2
+    return Pair(substring(0, mid), substring(mid))
+}
