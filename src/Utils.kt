@@ -27,3 +27,9 @@ fun String.splitHalf(): Pair<String, String> {
     val mid = length / 2
     return Pair(substring(0, mid), substring(mid))
 }
+
+fun IntRange.fullyContain(other: IntRange): Boolean = start <= other.first && other.last <= endInclusive
+
+fun hasFullOverlap(a: IntRange, b: IntRange): Boolean = a.fullyContain(b) || b.fullyContain(a)
+
+fun hasOverlap(a: IntRange, b: IntRange): Boolean = a.contains(b.first) || b.contains(a.first)
