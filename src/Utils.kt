@@ -33,3 +33,15 @@ fun IntRange.fullyContain(other: IntRange): Boolean = start <= other.first && ot
 fun hasFullOverlap(a: IntRange, b: IntRange): Boolean = a.fullyContain(b) || b.fullyContain(a)
 
 fun hasOverlap(a: IntRange, b: IntRange): Boolean = a.contains(b.first) || b.contains(a.first)
+
+data class Grid<T>(val rows: Int, val cols: Int, val initial: T) {
+    val data = MutableList(rows) { MutableList(cols) { initial } }
+
+    operator fun get(x: Int, y: Int): T {
+        return data[y][x]
+    }
+
+    operator fun set(x: Int, y: Int, value: T) {
+        data[y][x] = value
+    }
+}
