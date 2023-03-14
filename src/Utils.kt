@@ -44,4 +44,6 @@ data class Grid<T>(val rows: Int, val cols: Int, val initial: T) {
     operator fun set(x: Int, y: Int, value: T) {
         data[y][x] = value
     }
+
+    fun isValidIndex(x: Int, y: Int): Boolean = x in 0 until cols && y in 0 until rows
 }
