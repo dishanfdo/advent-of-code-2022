@@ -9,9 +9,9 @@ fun main() {
         return Pair(a.toIntRange(), b.toIntRange())
     }
 
-    fun Pair<IntRange, IntRange>.hasFullOverlap() = hasFullOverlap(this.first, this.second)
+    fun Pair<IntRange, IntRange>.hasFullOverlap() = this.first.hasFullOverlap(this.second)
 
-    fun Pair<IntRange, IntRange>.hasPartialOverlap() = hasOverlap(this.first, this.second)
+    fun Pair<IntRange, IntRange>.hasPartialOverlap() = first.hasOverlap(second)
 
     fun part1(input: List<String>): Int {
         return input

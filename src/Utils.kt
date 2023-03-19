@@ -30,9 +30,43 @@ fun String.splitHalf(): Pair<String, String> {
 
 fun IntRange.fullyContain(other: IntRange): Boolean = start <= other.first && other.last <= endInclusive
 
-fun hasFullOverlap(a: IntRange, b: IntRange): Boolean = a.fullyContain(b) || b.fullyContain(a)
+fun IntRange.hasFullOverlap(b: IntRange): Boolean = fullyContain(b) || b.fullyContain(this)
 
-fun hasOverlap(a: IntRange, b: IntRange): Boolean = a.contains(b.first) || b.contains(a.first)
+fun IntRange.hasOverlap(b: IntRange): Boolean = contains(b.first) || b.contains(first)
+
+fun IntRange.merge(other: IntRange): IntRange {
+    if (!hasOverlap(other)) error("Can't merge non overlapping ranges")
+    val a = kotlin.math.min(first, other.first)
+    val b = kotlin.math.max(last, other.last)
+    return a .. b
+}
+
+fun IntRange.clip(min: Int, max: Int): IntRange {
+    val a = kotlin.math.max(first, min)
+    val b = kotlin.math.min(last, max)
+    return a .. b
+}
+
+fun merge(ranges: List<IntRange>): List<IntRange> {
+    if (ranges.size < 2) return ranges
+
+    val sorted = ranges.sortedBy { it.first }
+    val merged = mutableListOf<IntRange>()
+
+    var curr = sorted.first()
+    for (range in sorted) {
+        if (curr.hasOverlap(range)) {
+            curr = curr.merge(range)
+            continue
+        }
+
+        merged.add(curr)
+        curr = range
+    }
+    merged.add(curr)
+
+    return merged
+}
 
 data class Grid<T>(val rows: Int, val cols: Int, val initial: T) {
     val data = MutableList(rows) { MutableList(cols) { initial } }
